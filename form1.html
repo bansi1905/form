@@ -59,10 +59,8 @@
 
             <div class="form-group">
                 <label for="gender"><b>Gender</b></label>
-                <input type="radio" id="gender"  value="Female">
-                <label for="Female">Female</label>
-                <input type="radio" id="gender" value="Male">
-                <label for="Male">Male</label><br><br>
+                <input type="radio"  id="gender" name="gender" value="Female" required> Female
+                <input type="radio" name="gender" value="Male" required> Male<br><br>
             </div>
 
             <div class="form-group">
@@ -82,19 +80,15 @@
 
             <div class="form-group">
                 <label for="state"><b>State</b></label>
-                <select id="state" required>
-                    <option value=" "></option>
-                    <option value=" "></option>
-                    <option value=" "></option>
+                <select id="state" >
+                    <option value="">Select a state</option>
                 </select><br><br>
             </div>
 
             <div class="form-group">
                 <label for="city"><b>City</b></label>
-                <select id="city" required>
-                    <option value=" "></option>
-                    <option value=" "></option>
-                    <option value=" "></option>
+                <select id="city" >
+                    <option value="">Select a city</option>
                 </select><br><br>
             </div>
 
@@ -165,14 +159,14 @@
                 const username = document.getElementById("username").value;
                 const email = document.getElementById("email").value;
                 const password = document.getElementById("password").value;
-                const gender = document.getElementById("gender").value;
+                const gender = document.querySelector('input[name="gender"]:checked').value;
                 const address = document.getElementById("address").value;
                 const country = document.getElementById("country").value;
-                const state = document.getElementById("state").value;
-                const city = document.getElementById("city").value;
+                const stateDropdown = document.getElementById("state");
+                const cityDropdown = document.getElementById("city");
                 const Zipcode = document.getElementById("code").value;
                 const position = document.getElementById("position").value;
-                const hobbies = document.getElementById("hobbies").value;
+                const hobbies = Array.from(document.querySelectorAll('input[name="cricket"], input[name="cooking"], input[name="Travelling"]:checked')).map((hobby) => hobby.value).join(", ");
                 const phone = document.getElementById("phone").value;     
 
                 let isValid = true;
@@ -230,6 +224,7 @@
                     return;
                 }
 
+                
                 if (selectedRow) {
                     selectedRow.cells[0].textContent = name;
                     selectedRow.cells[1].textContent = username;
@@ -238,8 +233,8 @@
                     selectedRow.cells[4].textContent = gender;
                     selectedRow.cells[5].textContent = address;
                     selectedRow.cells[6].textContent = country;
-                    selectedRow.cells[7].textContent = state;
-                    selectedRow.cells[8].textContent = city;
+                    selectedRow.cells[7].textContent = stateDropdown;
+                    selectedRow.cells[8].textContent = cityDropdown;
                     selectedRow.cells[9].textContent = Zipcode;
                     selectedRow.cells[10].textContent = position;
                     selectedRow.cells[11].textContent = hobbies;
@@ -254,8 +249,8 @@
                     `<td>`+ gender +`</td>`+
                     `<td>`+ address + `</td>`+
                     `<td>`+ country +`</td>`+
-                    `<td>`+ state +`</td>`+
-                    `<td>`+ city +`</td>`+
+                    `<td>`+ stateDropdown +`</td>`+
+                    `<td>`+ cityDropdown +`</td>`+
                     `<td>`+ Zipcode +`</td>`+
                     `<td>`+ position +`</td>`+
                     `<td>`+ hobbies +`</td>`+
@@ -272,14 +267,14 @@
                         document.getElementById("username").value = row.cells[1].textContent;
                         document.getElementById("email").value = row.cells[2].textContent;
                         document.getElementById("password").value = row.cells[3].textContent;
-                        document.getElementById("gender").value= row.cells[4].textContent;
+                        document.querySelector(`input[name="gender"][value="${row.cells[4].textContent}"]`).checked;
                         document.getElementById("address").value = row.cells[5].textContent;
                         document.getElementById("country").value = row.cells[6].textContent;
                         document.getElementById("state").value = row.cells[7].textContent;
                         document.getElementById("city").value = row.cells[8].textContent;
                         document.getElementById("code").value = row.cells[9].textContent;
                         document.getElementById("position").value = row.cells[10].textContent;
-                        document.getElementById("hobbies").value = row.cells[11].textContent;
+                        document.querySelector('input[name="hobbies"]').forEach((checkbox) => {checkbox.checked = row.cells[11].textContent.includes(checkbox.value);});
                         document.getElementById("phone").value = row.cells[12].textContent;
                     });
 
