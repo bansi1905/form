@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> form</title>
+        <style>
+            #name,#username,#email,#address,#phone {
+                margin-left: 60px;
+                border: 2px solid black;
+                padding: 10px 30px 10px 0px;
+            }
+            button {
+                background-color: blanchedalmond;
+                padding: 5px;
+                margin-top: 10px;
+            }
+            .error {
+                color: brown;
+                font-size: 15px;
+                box-sizing: border-box;
+            }
+            table {
+                margin-top: 20px;
+                border-collapse: collapse;
+                width: 100;
+            }
+            th,td {
+                border: 1px solid black;
+                text-align: center;
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="validation-form" method="POST">
+                <div class="name">
+                    <label for="name"><b>Name</b></label>
+                    <input type="text" id="name"  required ><br><br>
+                    <div class="error" id="nameerror"></div>
+                </div>
+
+                <div class="username">
+                    <label for="username"><b>username</b></label>
+                    <input type="text" id="username"  required ><br><br>
+                    <div class="error" id="usernameerror"></div>
+                </div>
+
+                <div class="email">
+                    <label for="email"><b>Email</b></label>
+                    <input type="email" id="email" name="email" required><br><br>
+                    <div class="error" id="emailerror"></div>
+                </div>
+
+                <div class="address">
+                    <label for="address"><b>Address</b></label>
+                    <input type="text" id="address" name="address" required><br><br>
+                    <div class="error" id="addresserror"></div>
+                </div>
+
+                <div class="phone">
+                    <label for="phone"><b>Phone no.</b></label>
+                    <input type="tel" id="phone" name="phone"  required><br><br>
+                    <div class="error" id="phoneerror"></div>
+                </div>
+
+                <button type="submit" id="button">Submit</button>
+        </form>
+        
+        <div class="history">
+            <p>HISTORY</p>
+            <table id="history-table">
+                <tr>
+                    <th>name</th>
+                    <th>username</th>
+                    <th>email</th>
+                    <th>Address</th>
+                    <th>Phone number</th>
+                </tr>
+            </table>
+            <script>
+              const historyTable = document.getElementById("history-table");
+            let selectedRow = null;
+
+            document.getElementById('validation-form').addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById("name").value;
+                const username = document.getElementById("username").value;
+                const email = document.getElementById("email").value;
+                const address = document.getElementById("address").value;
+                const phone = document.getElementById("phone").value;
+
+                let isValid = true;
+                if (!/^[A-Za-z]+$/.test(name)) {
+                    document.getElementById('nameerror').textContent = "Name must contain only characters.";
+                    isValid = false;
+                } else {
+                    document.getElementById('nameerror').textContent = "";
+                }
+
+                if (username.length !== 6) {
+                    document.getElementById('usernameerror').textContent = "Username must be 6 characters.";
+                    isValid = false;
+                } else {
+                    document.getElementById('usernameerror').textContent = "";
+                }
+
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    document.getElementById('emailerror').textContent = "Please enter a valid email address.";
+                    isValid = false;
+                } else {
+                    document.getElementById('emailerror').textContent = "";
+                }
+
+                if (address.length < 50) {
+                    document.getElementById('addresserror').textContent = "Address must contain at least 50 characters.";
+                    isValid = false;
+                } else {
+                    document.getElementById('addresserror').textContent = "";
+                }
+
+                if (!/^\d{10}$/.test(phone)) {
+                    document.getElementById("phoneerror").textContent = "Phone number must be 10 digits.";
+                    isValid = false;
+                } else {
+                    document.getElementById('phoneerror').textContent = "";
+                }
+
+                if (!isValid) {
+                    return;
+                }
+
+                if (selectedRow) {
+                    selectedRow.cells[0].textContent = name;
+                    selectedRow.cells[1].textContent = username;
+                    selectedRow.cells[2].textContent = email;
+                    selectedRow.cells[3].textContent = address;
+                    selectedRow.cells[4].textContent = phone;
+                   
+                } else {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>`+ name +`</td>`+
+                    `<td>`+ username +`</td>`+
+                    `<td>`+ email+`</td>`+ 
+                    `<td>`+ address + `</td>`+
+                    `<td>`+phone+`</td>`+
+                    `<td>
+                        <button type="button" class="edit-btn">Edit</button>
+                        <button type="button" class="delete-btn">Delete</button>
+                    </td>`;
+                    historyTable.appendChild(row);
+
+                    row.querySelector(".edit-btn").addEventListener("click", function() {
+                        selectedRow = row;
+                        document.getElementById("name").value = name;
+                        document.getElementById("username").value =username;
+                        document.getElementById("email").value = email;
+                        document.getElementById("address").value = address;
+                        document.getElementById("phone").value = phone;
+                    });
+
+                    row.querySelector(".delete-btn").addEventListener("click", function() {
+                        row.remove();
+                    });
+                }
+
+                document.getElementById("validation-form").reset();
+            });
+        </script>
+    </body>
+</html>

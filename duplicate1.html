@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    
+    <div class="all">
+        <h1 style="font-size: 50px;">Form Validation</h1>
+        
+        Name : <input type="text" id="name" ><br> <br>
+        <div class="error" id="nameerror"></div>
+
+        Username: <input type="text" id="username" ><br><br>
+        <div class="error" id="usernameerror"></div>
+
+        Email:  <input type="text" id="email" ><br><br>
+        <div class="error" id="emailerror"></div>
+
+        Password: <input type="text" id="password"><br><br>
+        <div class="password" id="passworderror"></div>
+
+        Phone no: <input type="tel" id="number" ><br><br>
+        <div class="error" id="numbererror"></div>
+
+        Gender: <input type= "radio" id="gender">
+                <label for="female">Female</label>
+                <input type= "radio" id="gender">
+                <label for="male">Male</label> <br><br>
+
+        Position:  <label for="position">Choose a Position:</label>
+                      <select name="position" id="position">
+                      <option value="">HR</option>   
+                      <option value="">Clarc</option>  
+                      <option value="">Employee</option>  
+                      <option value="">Inten</option>  
+                   </select> <br><br>
+           
+
+        Hobbies:   <input type="checkbox" id="hobby1"  value="hobby">
+                    <label for="hobby"> travelling</label>
+                    <input type="checkbox" id="hobby2"  value="hobby">
+                    <label for="hobby">cooking</label>
+                    <input type="checkbox" id="hobby3"  value="hobby">
+                    <label for="hobby">reading</label>
+                    <br><br>
+
+
+        Country: <label for ="country">Country</label>
+                <select  id="country">
+                    <option value="india">India</option>
+                    <option value="US">Germany</option>
+                    <option value="UK">Australia</option>
+                </select><br><br>
+
+        State:  <label for ="state">State</label>
+                <select name="state" id="state">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>   <br><br>
+
+        city:   <label for="city">City</label>
+                <select name="city" id="city">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select> <br><br>
+
+        Zipcode: <input type="text" id="Zipcode"><br><br>
+
+        Address: <textarea id="address">
+         
+            <button type="submit" id="button" onclick="newform()">Submit</button> <br><br>
+
+        <table id="table"> 
+            <div id="tab">
+               <tr>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Phone No</th>
+                  <th>Address</th>
+                  
+               </tr>
+        </div>
+
+        </table>
+
+        </div>
+    </div>
+
+    <script src="new.js"></script>
+</body>
+</html>

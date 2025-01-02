@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="form">
+
+    </div>
+    <div id="table"></div>
+    <script>
+        const defualtData = [
+            { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+            { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+            { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
+            { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
+            { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: 4 },
+            { id: 6, lastName: "Melisandre", firstName: "Zklja", age: 150 },
+            { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+            { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+            { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+            ];
+
+            const button1 = document.createElement("button");
+            button1.textContent = "ascending order";
+            document.body.appendChild(button1);
+            button1.style.marginTop = "30px";
+            button1.style.marginLeft = "50px";
+            
+            const button2 = document.createElement("button");
+            button2.textContent = "descending order";
+            document.body.appendChild(button2);
+            button2.style.marginTop = "30px";
+            button2.style.marginLeft = "50px";
+
+            button1.addEventListener("click", function () {
+            const sortData = defualtData.sort((a, b) => {
+                if (a.firstName < b.firstName) {
+                return -1;
+                }
+                if (a.firstName > b.firstName) {
+                return 1;
+                }
+                return 0;
+            });
+            createTable(sortData);
+            });
+            button2.addEventListener("click", function () {
+            const sortData = defualtData.sort((b, a) => {
+                if (a.firstName < b.firstName) {
+                return -1;
+                }
+                if (a.firstName > b.firstName) {
+                return 1;
+                }
+                return 0;
+            });
+            createTable(sortData);
+            });
+
+            let hederRow = document.createElement("tr");
+            var select = document.createElement("select");
+            select.style.marginBottom = "30px";
+            select.style.marginTop = "20px";
+            select.style.marginLeft = "100px";
+            Object.keys(defualtData[0]).forEach((key) => {
+            const th = document.createElement("th");
+            th.appendChild(document.createTextNode(key));
+            hederRow.appendChild(th);
+            var option = document.createElement("option");
+            option.appendChild(document.createTextNode(key));
+            select.appendChild(option);
+            document.body.appendChild(select);
+            });
+            function createTable(data) {
+            var table = document.createElement("table");
+            table.setAttribute("border", "2");
+            table.style.marginLeft = "100px";
+
+            table.appendChild(hederRow);
+
+            data.forEach((data2) => {
+                var row = document.createElement("tr");
+                Object.values(data2).forEach((values) => {
+                const td = document.createElement("td");
+                td.appendChild(document.createTextNode(values));
+                row.appendChild(td);
+                });
+                table.appendChild(row);
+            });
+
+            const tableTag = document.getElementById("table");
+            tableTag.replaceChildren();
+            tableTag.appendChild(table);
+            }
+            createTable(defualtData);
+
+    </script>
+</body>
+</html>

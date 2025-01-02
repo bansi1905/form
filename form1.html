@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Validation Form</title>
+        <style>
+            #name, #username, #email, #address, #phone ,#country,#state, #city ,#password ,#code, #gender ,#position ,#hobbies{
+                margin-left: 60px;
+                border: 2px solid black;
+                padding: 10px 30px 10px 0px;
+            }
+            button {
+                background-color: blanchedalmond;
+                padding: 5px;
+                margin-top: 10px;
+            }
+            .error {
+                color: brown;
+                font-size: 15px;
+                box-sizing: border-box;
+            }
+            table {
+                margin-top: 20px;
+                border-collapse: collapse;
+                width: 100;
+            }
+            th,td {
+                border: 1px solid black;
+                text-align: center;
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="validation-form" method="POST">
+            <h2>VALIDATION FORM</h2>
+            <div class="form-group">
+                <label for="name"><b>Name</b></label>
+                <input type="text" id="name" required><br><br>
+                <div class="error" id="nameerror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="username"><b>Username</b></label>
+                <input type="text" id="username" required><br><br>
+                <div class="error" id="usernameerror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email"><b>Email</b></label>
+                <input type="email" id="email" name="email" required><br><br>
+                <div class="error" id="emailerror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password"><b>Password</b></label>
+                <input type="password" id="password" required><br><br>
+                <div class="error" id="passworderror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender"><b>Gender</b></label>
+                <input type="radio" id="gender"  value="Female">
+                <label for="Female">Female</label>
+                <input type="radio" id="gender" value="Male">
+                <label for="Male">Male</label><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="address"><b>Address</b></label>
+                <textarea name="address" id="address" required ></textarea><br><br>
+                <div class="error" id="addresserror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for ="country"><b>Country</b></label>
+                <select id="country" required>
+                    <option value="india">india</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Australia">Australia</option>
+                </select><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="state"><b>State</b></label>
+                <select id="state" required>
+                    <option value=" "></option>
+                    <option value=" "></option>
+                    <option value=" "></option>
+                </select><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="city"><b>City</b></label>
+                <select id="city" required>
+                    <option value=" "></option>
+                    <option value=" "></option>
+                    <option value=" "></option>
+                </select><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="code"><b>Zip Code</b></label>
+                <input type="code" id="code" required><br><br>
+                <div class="error" id="codeerror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="position"><b>Position</b></label>
+                <select id="position" required>
+                    <option value="Manager ">Manager</option>
+                    <option value="Software Engineer ">Software Engineer</option>
+                    <option value=" Intern Software Developer">Intern Software Developer</option>
+                </select><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="hobbies"><b>Hobbies</b></label>
+                <input type="checkbox" id="hobbies" name="cricket" value="cricket">
+                <label for="">Cricket </label>
+                <input type="checkbox" id="hobbies" name="cooking" value="cooking">
+                <label for="vehicle2">Cooking </label>
+                <input type="checkbox" id="hobbies" name="Travelling" value="Travelling">
+                <label for=""> Travelling</label><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="phone"><b>Phone no.</b></label>
+                <input type="tel" id="phone" name="phone" required><br><br>
+                <div class="error" id="phoneerror"></div>
+            </div>
+
+            <button type="submit" id="button">Submit</button>
+        </form>
+
+        <div class="history">
+            <p>HISTORY</p>
+            <table id="history-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Zip Code</th>
+                    <th>Position</th>
+                    <th>Hobbies</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            const historyTable = document.getElementById("history-table");
+            let selectedRow = null;
+
+            document.getElementById('validation-form').addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById("name").value;
+                const username = document.getElementById("username").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const gender = document.getElementById("gender").value;
+                const address = document.getElementById("address").value;
+                const country = document.getElementById("country").value;
+                const state = document.getElementById("state").value;
+                const city = document.getElementById("city").value;
+                const Zipcode = document.getElementById("code").value;
+                const position = document.getElementById("position").value;
+                const hobbies = document.getElementById("hobbies").value;
+                const phone = document.getElementById("phone").value;     
+
+                let isValid = true;
+                if (!/^[A-Za-z]+$/.test(name)) {
+                    document.getElementById('nameerror').textContent = "Name must contain only characters.";
+                    isValid = false;
+                } else {
+                    document.getElementById('nameerror').textContent = "";
+                }
+
+                if (username.length > 10 && (/[$&+,:;=?@#|'<>.-^*()%!]/.test(username) )) {
+                    document.getElementById('usernameerror').textContent = "invalid username.";
+                    isValid = false;
+                } else {
+                    document.getElementById('usernameerror').textContent = "";
+                }
+
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    document.getElementById('emailerror').textContent = "Please enter a valid email address.";
+                    isValid = false;
+                } else {
+                    document.getElementById('emailerror').textContent = "";
+                }
+
+                if (!/^[a-zA-Z0-9]*$/.test(password) ) {
+                    document.getElementById('passworderror').textContent = "invalid password.";
+                    isValid = false;
+                } else {
+                    document.getElementById('passworderror').textContent = "";
+                }
+
+
+                if (address.length < 50) {
+                    document.getElementById('addresserror').textContent = "Address must contain at least 50 characters.";
+                    isValid = false;
+                } else {
+                    document.getElementById('addresserror').textContent = "";
+                }
+
+                if (!/^[0-9]+$/.test(Zipcode)) {
+                    document.getElementById("codeerror").textContent = "only numbers are allowed";
+                    isValid = false;
+                } else {
+                    document.getElementById('codeerror').textContent = "";
+                }
+
+                if (!/^\d{10}$/.test(phone)) {
+                    document.getElementById("phoneerror").textContent = "Phone number must be 10 digits.";
+                    isValid = false;
+                } else {
+                    document.getElementById('phoneerror').textContent = "";
+                }
+
+                if (!isValid) {
+                    return;
+                }
+
+                if (selectedRow) {
+                    selectedRow.cells[0].textContent = name;
+                    selectedRow.cells[1].textContent = username;
+                    selectedRow.cells[2].textContent = email;
+                    selectedRow.cells[3].textContent = password;
+                    selectedRow.cells[4].textContent = gender;
+                    selectedRow.cells[5].textContent = address;
+                    selectedRow.cells[6].textContent = country;
+                    selectedRow.cells[7].textContent = state;
+                    selectedRow.cells[8].textContent = city;
+                    selectedRow.cells[9].textContent = Zipcode;
+                    selectedRow.cells[10].textContent = position;
+                    selectedRow.cells[11].textContent = hobbies;
+                    selectedRow.cells[12].textContent = phone;
+                    selectedRow = null;
+                } else {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>`+ name +`</td>`+
+                    `<td>`+ username +`</td>`+
+                    `<td>`+ email+`</td>`+ 
+                    `<td>`+ password +`</td>`+
+                    `<td>`+ gender +`</td>`+
+                    `<td>`+ address + `</td>`+
+                    `<td>`+ country +`</td>`+
+                    `<td>`+ state +`</td>`+
+                    `<td>`+ city +`</td>`+
+                    `<td>`+ Zipcode +`</td>`+
+                    `<td>`+ position +`</td>`+
+                    `<td>`+ hobbies +`</td>`+
+                    `<td>`+phone+`</td>`+
+                    `<td>
+                        <button type="button" class="edit-btn">Edit</button>
+                        <button type="button" class="delete-btn">Delete</button>
+                    </td>`;
+                    historyTable.appendChild(row);
+
+                    row.querySelector(".edit-btn").addEventListener("click", function() {
+                        selectedRow = row;
+                        document.getElementById("name").value = row.cells[0].textContent;
+                        document.getElementById("username").value = row.cells[1].textContent;
+                        document.getElementById("email").value = row.cells[2].textContent;
+                        document.getElementById("password").value = row.cells[3].textContent;
+                        document.getElementById("gender").value= row.cells[4].textContent;
+                        document.getElementById("address").value = row.cells[5].textContent;
+                        document.getElementById("country").value = row.cells[6].textContent;
+                        document.getElementById("state").value = row.cells[7].textContent;
+                        document.getElementById("city").value = row.cells[8].textContent;
+                        document.getElementById("code").value = row.cells[9].textContent;
+                        document.getElementById("position").value = row.cells[10].textContent;
+                        document.getElementById("hobbies").value = row.cells[11].textContent;
+                        document.getElementById("phone").value = row.cells[12].textContent;
+                    });
+
+                    row.querySelector(".delete-btn").addEventListener("click", function() {
+                        row.remove();
+                    });
+                }
+
+                document.getElementById("validation-form").reset();
+            });
+        </script>
+    </body>
+</html>

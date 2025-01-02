@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>to-do-list</title>
+        <style>
+            body {
+              margin: 10px;
+              padding: 0;
+              background-color: #f4f4f9;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              
+            }
+            .todo-container {
+              background-color: white;
+              padding: 20px;
+              border-radius: 8px;
+              width: 300px;
+              text-align: center;
+            }
+            .input-section {
+              display: flex;
+              gap: 10px;
+              margin-bottom: 20px;
+            }
+            #todo-input {
+              padding: 10px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            }
+            #add-btn {
+              background-color: bisque;
+            }
+            #todo-list {
+              list-style: none;
+              padding: 0;
+            }
+            #todo-list li {
+              background-color: #ccc;
+              margin: 5px 0;
+              padding: 10px;
+              border: 1px solid black;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .delete-btn {
+              background-color: aquamarine;
+              color: black;
+              padding: 5px 10px;
+              border: 1px solid black;
+            }
+            .edit-btn {
+              background-color: aquamarine;
+              color: black;
+              padding: 5px 10px;
+              border: 1px solid black;
+            }
+            .update-btn {
+              background-color: blanchedalmond;
+              color: black;
+            }
+        </style>
+    </head>
+    <body>
+      <div class="todo-container">
+        <h1>To-Do List</h1>
+        <div class="input-section">
+          <input type="text" id="todo-input" placeholder="Add a new task">
+          <button id="add-btn" >Add</button>
+        </div>
+        <ul id="todo-list">
+         
+        </ul>
+      </div>
+      <script>
+        const addButton = document.getElementById('add-btn');
+        const inputField = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+      
+        addButton.addEventListener('click', addTask);
+        
+        function addTask() {
+          const task = inputField.value.trim();
+        
+          if (task) {
+            const listItem = document.createElement('li');
+
+            const tasktext=document.createElement('span');
+            listItem.appendChild(tasktext);
+            tasktext.textContent = task;
+
+            const editbutton=document.createElement('button');
+            editbutton.textContent = 'edit';
+            editbutton.className = 'edit-btn';
+
+            const updatebutton=document.createElement('button');
+            updatebutton.textContent='update';
+            updatebutton.className='update-btn';
+
+            editbutton.addEventListener('click',(e) => {
+              const li1 = e.target.closest('li');
+              const tasktextelement=li1.querySelector('span');
+              inputField.value=tasktextelement.textContent;
+              addButton.replaceWith(updatebutton);
+            });
+          
+            updatebutton.addEventListener('click',(event) => {
+              const listItem=event.target.closest('li');
+             const tasktextelement=todoList.querySelector('span');
+             const updatetask=inputField.value;
+              
+             if(updatetask) {
+              tasktextelement.textContent=updatetask;
+              inputField.value=" ";
+             }
+            });
+
+
+            const deleteButton=document.createElement('button');
+            deleteButton.textContent='delete';
+            deleteButton.className='delete-btn';
+           
+            deleteButton.addEventListener('click',() => {
+              todoList.removeChild(listItem);
+            });
+            
+            listItem.appendChild(editbutton);
+            listItem.appendChild(updatebutton);
+            listItem.appendChild(deleteButton);
+            todoList.appendChild(listItem)
+            inputField.value = '';
+          }
+        };
+    </script>
+  </body>
+</html>
