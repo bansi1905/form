@@ -213,21 +213,45 @@
                 event.preventDefault();
 
                 const name = document.getElementById("name").value;
+                localStorage.setItem("name", document.getElementById("name").value);
+
                 const username = document.getElementById("username").value;
+                localStorage.setItem("username", document.getElementById("username").value);
+
                 const email = document.getElementById("email").value;
+                localStorage.setItem("email", document.getElementById("email").value);
+
                 const password = document.getElementById("password").value;
+                localStorage.setItem("password", document.getElementById("password").value);
+
                 const gender = document.querySelector('input[name="gender"]:checked').value;
+                localStorage.setItem("gender", document.getElementById("gender").value);
+
                 const address = document.getElementById("address").value;
+                localStorage.setItem("address", document.getElementById("address").value);
+
                 const country = document.getElementById("country").value;
+                localStorage.setItem("country", document.getElementById("country").value);
+
                 const state = document.getElementById("state").value;
+                localStorage.setItem("state", document.getElementById("state").value);
+
                 const city = document.getElementById("city").value;
+                localStorage.setItem("city", document.getElementById("city").value);
+
                 const Zipcode = document.getElementById("code").value;
+                localStorage.setItem("code", document.getElementById("code").value);
+
                 const position = document.getElementById("position").value;
+                localStorage.setItem("position", document.getElementById("position").value);
+
                 const phone = document.getElementById("phone").value;
+                localStorage.setItem("phone", document.getElementById("phone").value);
+
                 const hobbies = Array.from(document.querySelectorAll('input[type="checkbox"]'))
                     .filter((checkbox) => checkbox.checked)
                     .map((checkbox) => checkbox.value);
-                     
+                localStorage.setItem("hobbies", document.getElementById("hobbies").value);
 
                 let isValid = true;
                 if (!/^[A-Za-z]+$/.test(name)) {
@@ -321,6 +345,12 @@
                         <button type="button" class="delete-btn">Delete</button>
                     </td>`;
                     historyTable.appendChild(row);
+
+                    var details = {name , username, email, password, phone, gender, position, country, state, city, address, Zipcode, hobbies};
+  
+                    const data = JSON.parse(localStorage.getItem("tabel_data") || "[]");
+                    data.push(details);
+                    localStorage.setItem("tabel_data", JSON.stringify(data))
 
                     row.querySelector(".edit-btn").addEventListener("click", function() {
                         selectedRow = row;

@@ -162,6 +162,13 @@
                     </td>`;
                     historyTable.appendChild(row);
 
+                    var details = {name , username, email, phone, address};
+  
+                    const data = JSON.parse(localStorage.getItem("tabel_data") || "[]");
+                    data.push(details);
+                    localStorage.setItem("tabel_data", JSON.stringify(data))
+
+
                     row.querySelector(".edit-btn").addEventListener("click", function() {
                         selectedRow = row;
                         document.getElementById("name").value = row.cells[0].textContent;
