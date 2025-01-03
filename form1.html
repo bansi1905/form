@@ -3,10 +3,17 @@
     <head>
         <title>Validation Form</title>
         <style>
+            body {
+                background-color: lightcyan;
+                font-size: medium;
+                font-family:Verdana, Geneva, Tahoma, sans-serif ;
+            }
             #name, #username, #email, #address, #phone ,#country,#state, #city ,#password ,#code, #gender ,#position ,#hobbies{
                 margin-left: 60px;
                 border: 2px solid black;
                 padding: 10px 30px 10px 0px;
+                font-size:small ;
+                font-family:Verdana, Geneva, Tahoma, sans-serif ;
             }
             button {
                 background-color: blanchedalmond;
@@ -14,7 +21,7 @@
                 margin-top: 10px;
             }
             .error {
-                color: brown;
+                color:red;
                 font-size: 15px;
                 box-sizing: border-box;
             }
@@ -60,7 +67,7 @@
             <div class="form-group">
                 <label for="gender"><b>Gender</b></label>
                 <input type="radio"  id="gender" name="gender" value="Female" required> Female
-                <input type="radio" name="gender" value="Male" required> Male<br><br>
+                <input type="radio" id="gender" name="gender" value="Male" required> Male<br><br>
             </div>
 
             <div class="form-group">
@@ -71,8 +78,9 @@
 
             <div class="form-group">
                 <label for ="country"><b>Country</b></label>
-                <select id="country" required>
-                    <option value="india">india</option>
+                <select id="country">
+                    <option value=" ">Select a country</option>
+                    <option value="India">India</option>
                     <option value="Germany">Germany</option>
                     <option value="Australia">Australia</option>
                 </select><br><br>
@@ -101,26 +109,24 @@
             <div class="form-group">
                 <label for="position"><b>Position</b></label>
                 <select id="position" required>
-                    <option value="Manager ">Manager</option>
-                    <option value="Software Engineer ">Software Engineer</option>
-                    <option value=" Intern Software Developer">Intern Software Developer</option>
+                    <option value=" ">Select a position</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Software Engineer">Software Engineer</option>
+                    <option value="Intern Software Developer">Intern Software Developer</option>
                 </select><br><br>
-            </div>
-
-            <div class="form-group">
-                <label for="hobbies"><b>Hobbies</b></label>
-                <input type="checkbox" id="hobbies" name="cricket" value="cricket">
-                <label for="">Cricket </label>
-                <input type="checkbox" id="hobbies" name="cooking" value="cooking">
-                <label for="vehicle2">Cooking </label>
-                <input type="checkbox" id="hobbies" name="Travelling" value="Travelling">
-                <label for=""> Travelling</label><br><br>
             </div>
 
             <div class="form-group">
                 <label for="phone"><b>Phone no.</b></label>
                 <input type="tel" id="phone" name="phone" required><br><br>
                 <div class="error" id="phoneerror"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="hobbies"><b>Hobbies</b></label>
+                <input type="checkbox" name="hobbies" id="hobbies" value="Cricket"> Cricket
+                <input type="checkbox" name="hobbies" id="hobbies" value="Cooking"> Cooking
+                <input type="checkbox" name="hobbies" id="hobbies" value="Travelling"> Travelling<br><br>
             </div>
 
             <button type="submit" id="button">Submit</button>
@@ -151,8 +157,59 @@
         <script>
             const historyTable = document.getElementById("history-table");
             let selectedRow = null;
+            const stateDropdown = document.getElementById("state");
+            const cityDropdown = document.getElementById("city");
+            const locations = {
+                    india: {
+                        states: ["Maharashtra", "Karnataka", "Tamil Nadu"],
+                        cities: {
+                            Maharashtra: ["Mumbai", "Pune"],
+                            Karnataka: ["Bengaluru", "Mysuru"],
+                            TamilNadu: ["Chennai", "Coimbatore"],
+                        },
+                    },
+                    germany: {
+                        states: ["Bavaria", "Berlin", "Brandenburg"],
+                        cities: {
+                            Bavaria: ["Munich", "Nuremberg"],
+                            Berlin: ["Leipzig", "Potsdam"],
+                            Brandenburg: ["Potsdam","Cottbus"],
+                        },
+                    },
+                    australia: {
+                        states: ["New South Wales", "Queensland", "Victoria"],
+                        cities: {
+                            "New South Wales": ["Sydney", "Newcastle"],
+                            Queensland: ["Brisbane", "Gold Coast"],
+                            Victoria: ["Melbourne", "Geelong"],
+                        },
+                    },
+                };
 
-            document.getElementById('validation-form').addEventListener("submit", function(event) {
+                document.getElementById("country").addEventListener("change", function () {
+                    const country = this.value.toLowerCase();
+                    stateDropdown.innerHTML = `<option value="">Select State</option>`;
+                    
+                    if (locations[country]) {
+                        locations[country].states.forEach((state) => {
+                            stateDropdown.innerHTML += `<option value="${state}">${state}</option>`;
+                        });
+                    }
+                });
+
+                stateDropdown.addEventListener("change", function() {
+                    const country = document.getElementById("country").value.toLowerCase();
+                    const state=this.value;
+                    cityDropdown.innerHTML = `<option value="">Select city</option>`;
+
+                    if (locations[country] || locations[country]) {
+                        locations[country].cities[state].forEach((city) => {
+                        cityDropdown.innerHTML += `<option value="${city}">${city}</option>`;
+                        });
+                    }
+                });
+
+                        document.getElementById('validation-form').addEventListener("submit", function(event) {
                 event.preventDefault();
 
                 const name = document.getElementById("name").value;
@@ -162,12 +219,15 @@
                 const gender = document.querySelector('input[name="gender"]:checked').value;
                 const address = document.getElementById("address").value;
                 const country = document.getElementById("country").value;
-                const stateDropdown = document.getElementById("state");
-                const cityDropdown = document.getElementById("city");
+                const state = document.getElementById("state").value;
+                const city = document.getElementById("city").value;
                 const Zipcode = document.getElementById("code").value;
                 const position = document.getElementById("position").value;
-                const hobbies = Array.from(document.querySelectorAll('input[name="cricket"], input[name="cooking"], input[name="Travelling"]:checked')).map((hobby) => hobby.value).join(", ");
-                const phone = document.getElementById("phone").value;     
+                const phone = document.getElementById("phone").value;
+                const hobbies = Array.from(document.querySelectorAll('input[type="checkbox"]'))
+                    .filter((checkbox) => checkbox.checked)
+                    .map((checkbox) => checkbox.value);
+                     
 
                 let isValid = true;
                 if (!/^[A-Za-z]+$/.test(name)) {
@@ -177,8 +237,8 @@
                     document.getElementById('nameerror').textContent = "";
                 }
 
-                if (!/^[A-Za-z0-9 ]+$/.test(username)  && username.length > 10) {
-                    document.getElementById('usernameerror').textContent = "invalid username.";
+                if (!/^[A-Za-z0-9]*$/.test(username) || username.length > 10) {
+                    document.getElementById('usernameerror').textContent = "Invalid username.";
                     isValid = false;
                 } else {
                     document.getElementById('usernameerror').textContent = "";
@@ -233,12 +293,13 @@
                     selectedRow.cells[4].textContent = gender;
                     selectedRow.cells[5].textContent = address;
                     selectedRow.cells[6].textContent = country;
-                    selectedRow.cells[7].textContent = stateDropdown;
-                    selectedRow.cells[8].textContent = cityDropdown;
+                    selectedRow.cells[7].textContent = state;
+                    selectedRow.cells[8].textContent = city;
                     selectedRow.cells[9].textContent = Zipcode;
                     selectedRow.cells[10].textContent = position;
-                    selectedRow.cells[11].textContent = hobbies;
-                    selectedRow.cells[12].textContent = phone;
+                    selectedRow.cells[11].textContent = phone;
+                    selectedRow.cells[12].textContent = hobbies;
+                   
                     selectedRow = null;
                 } else {
                     const row = document.createElement("tr");
@@ -249,12 +310,12 @@
                     `<td>`+ gender +`</td>`+
                     `<td>`+ address + `</td>`+
                     `<td>`+ country +`</td>`+
-                    `<td>`+ stateDropdown +`</td>`+
-                    `<td>`+ cityDropdown +`</td>`+
+                    `<td>`+ state +`</td>`+
+                    `<td>`+ city +`</td>`+
                     `<td>`+ Zipcode +`</td>`+
                     `<td>`+ position +`</td>`+
-                    `<td>`+ hobbies +`</td>`+
                     `<td>`+phone+`</td>`+
+                    `<td>`+ hobbies +`</td>`+
                     `<td>
                         <button type="button" class="edit-btn">Edit</button>
                         <button type="button" class="delete-btn">Delete</button>
@@ -267,17 +328,16 @@
                         document.getElementById("username").value = row.cells[1].textContent;
                         document.getElementById("email").value = row.cells[2].textContent;
                         document.getElementById("password").value = row.cells[3].textContent;
-                        document.querySelector(`input[name="gender"][value="${row.cells[4].textContent}"]`).checked;
+                        document.querySelector(`input[name="gender"][value="${row.cells[4].textContent}"]`).checked = true;
                         document.getElementById("address").value = row.cells[5].textContent;
                         document.getElementById("country").value = row.cells[6].textContent;
                         document.getElementById("state").value = row.cells[7].textContent;
                         document.getElementById("city").value = row.cells[8].textContent;
                         document.getElementById("code").value = row.cells[9].textContent;
                         document.getElementById("position").value = row.cells[10].textContent;
-                        document.querySelector('input[name="hobbies"]').forEach((checkbox) => {checkbox.checked = row.cells[11].textContent.includes(checkbox.value);});
-                        document.getElementById("phone").value = row.cells[12].textContent;
+                        document.getElementById("phone").value = row.cells[11].textContent;
+                        document.querySelectorAll('input[name="hobbies"]').forEach((checkbox) => {checkbox.checked = row.cells[12].textContent.includes(checkbox.value);});
                     });
-
                     row.querySelector(".delete-btn").addEventListener("click", function() {
                         row.remove();
                     });
