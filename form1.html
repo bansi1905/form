@@ -177,7 +177,7 @@
                     document.getElementById('nameerror').textContent = "";
                 }
 
-                if (username.length > 10 && (/[$&+,:;=?@#|'<>.-^*()%!]/.test(username) )) {
+                if (!/^[A-Za-z0-9 ]+$/.test(username)  && username.length > 10) {
                     document.getElementById('usernameerror').textContent = "invalid username.";
                     isValid = false;
                 } else {
